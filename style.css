@@ -18,6 +18,22 @@ header {
   max-width: 400px;
   min-width: 300px;
 }
+
+.submenucontent {
+  position: absolute;
+  display: none;
+  right: 1%;
+  top: 8%;
+  background-color: black;
+  padding: 20px;
+  min-height: 150px;
+  min-width: 150px;
+}
+
+.submenu:hover .submenucontent {
+  display: block;
+}
+
 .contenedor {
   display: flex;
   flex-direction: column;
@@ -98,8 +114,8 @@ button:hover {
   * {
   }
   .icon {
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
   }
   header {
     max-width: 1200px;
