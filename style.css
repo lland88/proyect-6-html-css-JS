@@ -19,18 +19,28 @@ header {
   min-width: 300px;
 }
 
+table {
+  margin: auto;
+}
+
 .submenucontent {
   position: absolute;
   display: none;
-  right: 1%;
-  top: 8%;
-  background-color: black;
+  right: 5%;
+  top: 7.5%;
+  background-color: hsl(233, 50%, 9%);
   padding: 20px;
-  min-height: 150px;
-  min-width: 150px;
+  min-height: 300px;
+  min-width: 300px;
+  text-align: center;
+  margin: auto;
 }
 
 .submenu:hover .submenucontent {
+  display: block;
+}
+
+.submenucontent:hover {
   display: block;
 }
 
@@ -98,7 +108,15 @@ img {
   height: 150px;
 }
 
-button {
+#vaciar {
+  height: 35px;
+  width: 120px;
+  border-radius: 50px;
+  background-color: hsl(233, 47%, 7%);
+  border: 1px;
+}
+
+.agregar {
   height: 40px;
   width: 180px;
   border-radius: 50px;
@@ -106,7 +124,23 @@ button {
   border: 1px;
 }
 
-button:hover {
+.botonx {
+  height: 25px;
+  width: 25px;
+  border-radius: 50px;
+  background-color: hsl(0, 96%, 18%);
+  border: 1px;
+}
+
+.botonx:hover {
+  background-color: rgba(255, 0, 0, 0.733);
+}
+
+.agregar:hover {
+  background-color: hsla(256, 72%, 46%, 1);
+}
+
+#vaciar:hover {
   background-color: hsla(256, 72%, 46%, 1);
 }
 
