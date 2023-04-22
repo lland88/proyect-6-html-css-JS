@@ -6,10 +6,21 @@ const contenidocarrito = document.querySelector(`tbody`);
 // este arreglo siempre va a tener los items del carrito
 let articuloscarrito = [];
 const totalhtml = document.querySelector(`.total`);
-let total = 0;
+//obtenemos el total del local storage y si está vacio pues almacenamos 0
+let total = Number.parseInt(localStorage.getItem("total")) || 0;
 //funciones
 //funcion agregarCarrito para registrar cuando damos click en agregar al carrito y guardar el contendor al cual le dimos click en producto seleccionado
 listaproductos.addEventListener(`click`, agregarCarrito);
+// Añadimos localstorage para que el usaurio no pierda su carrito al actualizar o salir de pagina
+document.addEventListener("DOMContentLoaded", localFuncion);
+function localFuncion() {
+  articuloscarrito = JSON.parse(localStorage.getItem("Carrito")) || [];
+  carritoHtml();
+  totalhtml.innerHTML = `
+  <span class="total">${total}</span>
+  `;
+}
+
 function agregarCarrito(e) {
   // de esta forma ejecutamos el codigo solo si damos click en "agregar carrito"
   if (e.target.classList.contains(`agregar`)) {
@@ -32,6 +43,7 @@ function objetoProductoActual(producto) {
   );
   // para acumular el precio de todo lo que se va sumando al carrito el parsint recordemos es solamente para cambiar de tipo string a numero
   total += Number.parseInt(infoProducto.precio);
+
   //totalhtml representa el total en el html, y de esta manera insertamos dinamicamente el total
   totalhtml.innerHTML = `
   <span class="total">${total}</span>
@@ -76,6 +88,9 @@ function carritoHtml() {
     //agrega el html al tbody de la tabla del carrito
     contenidocarrito.appendChild(row);
   });
+  //cadavez que interactuemos con el boton agregar modificamos el local storage
+  localStorage.setItem("total", total);
+  localStorage.setItem("Carrito", JSON.stringify(articuloscarrito));
 }
 //la funcion limpiarHtml se encarga de limpiar el carrito por cada click que se para que este no se vaya acumulando
 function limpiarHtml() {
@@ -101,6 +116,7 @@ function eliminarUnElemento(e) {
     //para restarle al total al carrito debemos tomar en cuenta la cantidad.
     const cantidad = Number.parseInt(filaseleccionada.children[3].textContent);
     total -= cantidad * precioitemeliminado;
+
     totalhtml.innerHTML = `
   <span class="total">${total} </span>  
   `;
@@ -109,6 +125,9 @@ function eliminarUnElemento(e) {
     articuloscarrito = articuloscarrito.filter(
       (producto) => producto.nombre != itemaeliminar.trim()
     );
+    //si eliminamos un item tambien debemos modificar el local storage
+    localStorage.setItem("Carrito", JSON.stringify(articuloscarrito));
+    localStorage.setItem("total", total);
     //generamos nuevamente el while que es la forma mas optima para eliminar html de esa fila seleccionada del html
     while (filaseleccionada.firstChild) {
       filaseleccionada.removeChild(filaseleccionada.firstChild);
@@ -121,6 +140,10 @@ function vaciarCarrito() {
   //debemos resetear el arreglo para que despues de vaciar el carrito le den click a otro item no se coloquen todos los previos que ya existian en el arreglo
   articuloscarrito = [];
   //debemos resetear el acumulador del precio total del carrito
+  total = 0;
+  //Si vaciamos el carrito pues tambien actualizamos el local storage
+  localStorage.setItem("Carrito", JSON.stringify(articuloscarrito));
+  localStorage.setItem("total", total);
   totalhtml.innerHTML = `
   <span class="total">0</span>  
   `;
